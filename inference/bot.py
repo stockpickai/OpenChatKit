@@ -55,7 +55,9 @@ class ChatModel:
         # load model onto one device
         if max_memory is None:
             self._model = AutoModelForCausalLM.from_pretrained(
-                model_name, torch_dtype=torch.float16, device_map="auto")
+                model_name, torch_dtype=torch.float16, device_map="auto",
+                offload_folder="offload",  # optional offload-to-disk overflow directory (auto-created)
+            )
             self._model.to(device)
         # load the model with the given max_memory config (for devices with insufficient VRAM or multi-gpu)
         else:
